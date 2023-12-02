@@ -7,7 +7,7 @@ class Static_object:
         self.u = np.random.rand(samples_number)
 
     def set_parameters(self, parameters):
-        self.parameters = parameters
+        self.parameters = np.array(parameters)
 
     def transform(self):
         self.v = np.zeros_like(self.u)
@@ -20,7 +20,16 @@ class Static_object:
             #replace it with numpy dot function
             self.v[i] = np.dot(self.parameters, self.u[i-2:i+1])
         
-        print(self.v)
+    
+    def noise(self, noise_amplitude = 0.1, offset = 0):
+        self.y = np.zeros_like(self.v)
+
+        self.noise = np.random.rand(len(self.v)) * noise_amplitude + offset
+        self.y = self.v + self.noise
+
+        print(self.y)
+        
+
             
 
 
