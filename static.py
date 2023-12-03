@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt
 class Static_object:
     def __init__(self, cycles, samples_number):
         self.t = np.linspace(0, cycles*2*np.pi, samples_number)
-        #self.u = np.random.rand(samples_number)
-        self.u = signal.sawtooth(self.t, 0.5)
+        self.u = np.random.rand(samples_number)
+        
 
     def set_parameters(self, parameters):
         self.parameters = np.array(parameters)
