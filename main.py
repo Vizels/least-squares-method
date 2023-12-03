@@ -4,7 +4,7 @@ import measure
 test_wave = measure.Static_object(3, 1000)
 test_wave.set_parameters([1,1,1])
 test_wave.transform()
-test_wave.noise(0.1, 0)
+test_wave.noise(0.1, -0.5)
 
-# plt.plot(test_wave.t, test_wave.u)
-# plt.show()
+plt.plot(test_wave.t, test_wave.y)
+plt.show()

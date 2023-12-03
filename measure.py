@@ -28,7 +28,10 @@ class Static_object:
         self.y = self.v + self.noise
 
         print(self.y)
-        
+
+    def LSM(self): #least squares method
+        #TODO make an LSM function
+        pass
 
             
 
