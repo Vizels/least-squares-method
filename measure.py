@@ -27,18 +27,34 @@ class Static_object:
         self.noise = np.random.rand(len(self.v)) * noise_amplitude + offset
         self.y = self.v + self.noise
 
-        print(self.y)
+    def matrix_multiply(self, *args):
+        result = 1
+        for matrix in args:
+            result = np.dot(result, matrix)
 
-    def LSM(self): #least squares method
-        #TODO make an LSM function
-        pass
-
-            
-
-
+        return result
     
-        
+    def LSM(self): #least squares method
+        P = np.array([
+            [100, 0, 0],
+            [0, 100, 0],
+            [0, 0, 100]
+        ])
 
-        
+
+        b = np.array([0,0,0])[np.newaxis]
+        b = b.T
             
-            
+        for i in range(2, len(self.u)):
+            f = np.array(self.u[i-2:i+1])[np.newaxis]
+            f = f.T
+
+            nominator = self.matrix_multiply(P, f, f.T, P)
+            denominator = 1 + self.matrix_multiply(f.T, P, f)
+
+            P = P - nominator/denominator
+            Pf = self.matrix_multiply(P, f)
+            fTb = self.matrix_multiply(f.T, b)
+            b = b + Pf * (self.y[i]-fTb)
+
+        return b
