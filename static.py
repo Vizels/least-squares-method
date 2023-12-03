@@ -5,7 +5,8 @@ import matplotlib.pyplot as plt
 class Static_object:
     def __init__(self, cycles, samples_number):
         self.t = np.linspace(0, cycles*2*np.pi, samples_number)
-        self.u = np.random.rand(samples_number)
+        #self.u = np.random.rand(samples_number)
+        self.u = signal.sawtooth(self.t, 0.5)
 
     def set_parameters(self, parameters):
         self.parameters = np.array(parameters)
@@ -59,9 +60,6 @@ class Static_object:
             fTb = self.matrix_multiply(f.T, b)
             b = b + Pf * (self.y[i]-fTb)
             self.b_history.append(b)
-
-        
-
 
         return b
 
