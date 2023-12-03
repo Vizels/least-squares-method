@@ -1,15 +1,16 @@
 import numpy as np
-from scipy import signal
 import matplotlib.pyplot as plt
+from scipy import signal
 
 class Static_object:
     def __init__(self, cycles, samples_number):
         self.t = np.linspace(0, cycles*2*np.pi, samples_number)
-        self.u = np.random.rand(samples_number)
+        #self.u = np.random.rand(samples_number)
+        self.u = signal.sawtooth(self.t, 0.5)
         
-
     def set_parameters(self, parameters):
         self.parameters = np.array(parameters)
+    
 
     def transform(self):
         self.v = np.zeros_like(self.u)
@@ -26,7 +27,7 @@ class Static_object:
     def noise(self, noise_amplitude = 0.1, offset = 0):
         self.y = np.zeros_like(self.v)
 
-        self.noise = np.random.rand(len(self.v)) * noise_amplitude + offset
+        self.noise = (np.random.rand(len(self.v)) + offset) * noise_amplitude
         self.y = self.v + self.noise
 
     def matrix_multiply(self, *args):
@@ -37,11 +38,16 @@ class Static_object:
         return result
     
     def LSM(self): #least squares method
-        P = np.array([
+        P = np.eye(3,3) * 100
+        '''
+        [
             [100, 0, 0],
             [0, 100, 0],
             [0, 0, 100]
-        ])
+        ]
+        '''
+        
+        print(P)
 
         self.b_history = []
 
