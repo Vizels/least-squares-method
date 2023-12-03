@@ -1,5 +1,6 @@
 import numpy as np
 from scipy import signal
+import matplotlib.pyplot as plt
 
 class Static_object:
     def __init__(self, cycles, samples_number):
@@ -41,6 +42,7 @@ class Static_object:
             [0, 0, 100]
         ])
 
+        self.b_history = []
 
         b = np.array([0,0,0])[np.newaxis]
         b = b.T
@@ -56,5 +58,25 @@ class Static_object:
             Pf = self.matrix_multiply(P, f)
             fTb = self.matrix_multiply(f.T, b)
             b = b + Pf * (self.y[i]-fTb)
+            self.b_history.append(b)
+
+        
+
 
         return b
+
+
+    def plot_parameters_history(self):
+        b1, b2, b3 = [], [], []
+        
+        for i in range(len(self.b_history)):
+            b1.append(self.b_history[i][0])
+            b2.append(self.b_history[i][1])
+            b3.append(self.b_history[i][2])
+
+        plt.plot(self.t[2:], b1)
+        plt.plot(self.t[2:], b2)
+        plt.plot(self.t[2:], b3)
+        plt.show()
+
+        
